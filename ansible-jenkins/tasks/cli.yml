@@ -1,0 +1,17 @@
+---
+# Handle plugins
+- name: "{{ startup_delay_s | default(10) }}s delay while starting Jenkins"
+  wait_for:
+    host: localhost
+    port: "{{ port }}"
+    delay: "{{ startup_delay_s | default(10) }}"
+  when: jenkins_install.changed or config_changed.changed
+
+- name: "Create Jenkins CLI destination directory: {{ jenkins_dest }}"
+  file:
+    path: "{{ jenkins_dest }}"
+    state: directory
+
+- name: get Jenkins CLI Jar
+  local_action: get_url url={{jenkins_api_url}}/jnlpJars/opt/jenkins/jenkins-cli.jar dest={{jenkins.cli_dest}}
+

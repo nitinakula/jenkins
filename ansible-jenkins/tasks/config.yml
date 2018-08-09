@@ -1,0 +1,24 @@
+---
+
+- name: Create jenkins configuration for RedHat
+  file:
+    path: /etc/sysconfig/jenkins
+    state: touch
+
+- name: Configure Jenkins Port for RedHat
+  lineinfile:
+    dest: /etc/sysconfig/jenkins
+    regexp: ^JENKINS_PORT=
+    line: JENKINS_PORT={{port}}
+  register: config_changed
+
+- name: Restart jenkins now
+  service: name=jenkins state=restarted
+  when: config_changed.changed
+
+- name: Configure Jenkins Prefix for RedHat
+  lineinfile:
+    dest: /etc/sysconfig/jenkins
+    regexp: ^PREFIX=
+    line: PREFIX={{prefix}}
+

@@ -1,0 +1,30 @@
+---
+
+- include: repo.yml
+- name: Log in to Jenkins CLI if auth config is available
+  # OK to ignore errors as it won't work before Jenkins is installed
+  ignore_errors: yes
+  command: >
+    {{ jenkins_cli_cmd }} login --username {{ jenkins_admin_user }} --password '{{ jenkins_admin_password }}'
+  when: jenkins_admin_user is defined and jenkins_admin_password is defined
+  tags: NK
+- include: dependencies_redhat.yml
+
+  shell: yum -y install jenkins 
+    state=latest
+
+
+- name: Ensure jenkins is running
+  service:
+    name: jenkins
+
+- name: Start jenkins on boot
+  shell: chkconfig jenkins on
+
+- include: config.yml
+
+- include: cli.yml
+
+- include: plugins.yml
+
+#- include: config.yml

@@ -1,0 +1,4 @@
+---
+
+- name: Install repo for RedHat
+  include: repo.redhat.yml

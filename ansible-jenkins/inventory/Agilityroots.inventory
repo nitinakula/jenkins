@@ -1,0 +1,2 @@
+[localhost]
+04 ansible_ssh_user= ansible_ssh_pass=

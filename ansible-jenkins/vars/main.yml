@@ -1,0 +1,53 @@
+---
+jenkins_dest: /opt/jenkins
+jenkins_lib: /var/lib/jenkins
+jenkins:
+  redhat:
+    dependencies:
+      - 'libselinux-python'
+      - 'java'
+      - 'git'
+      - 'curl'
+  cli_dest: '{{ jenkins_dest }}/jenkins-cli.jar' # Jenkins CLI destination
+  updates_dest: '{{ jenkins_dest }}/updates_jenkins.json' # Jenkins updates file
+  jenkins_api_url: http://:8080
+    
+jenkins_cli_cmd: java -jar /opt/jenkins/jenkins-cli.jar -s http://:8080
+
+
+plugins:
+- git
+- github
+- github-organization-folder
+- github-branch-source
+- maven-plugin
+- credentials
+- ssh-credentials
+- credentials-binding
+- nested-view
+- copyartifact
+- build-user-vars-plugin
+- groovy-postbuild
+- violations
+- ssh-slaves
+- job-dsl
+- cloudbees-folder
+- view-job-filters
+- ws-cleanup
+- timestamper
+- build-timeout
+- email-ext
+- mailer
+- parameterized-trigger
+- run-condition
+- conditional-buildstep
+- build-pipeline-plugin
+- matrix-auth
+- workflow-aggregator
+- sonar
+- sonar-quality-gates
+- docker-plugin
+- docker-workflow
+- pipeline-github-lib
+- nexus-jenkins-plugin
+
